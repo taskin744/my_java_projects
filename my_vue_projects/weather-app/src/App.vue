@@ -12,7 +12,7 @@
         <div class="date">{{dateBuilder()}}</div>
       </div>
       <div class="weather-box">
-        <div class="temperature">{{Math.round(weather.main.temp)}}°c</div>
+        <div class="temperature">{{Math.round(weather.main.temp)}}°F</div>
           <div class="weather-status">{{weather.weather[0].main}}</div>
       </div>
     </div>
@@ -34,10 +34,11 @@ export default {
   methods: {
     fetchWeather(event) {
       if(event.key == 'Enter'){
-        fetch(`${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`)
+        fetch(`${this.url_base}weather?q=${this.query}&units=imperial&APPID=${this.api_key}`)
         .then(res => {
           return res.json();
         }).then(this.setResults);
+        this.query= '';
       }
     },
     setResults(results) {
