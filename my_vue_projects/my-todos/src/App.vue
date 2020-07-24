@@ -10,6 +10,7 @@
 import Header from './components/layout/Header';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
+import axios from 'axios';
 
 
 export default {
@@ -21,37 +22,31 @@ export default {
   },
   data(){
     return {
-      todos: [
-        {
-          id: 1,
-          title: "Todo 1",
-          completed: false
-        },
-         {
-          id: 2,
-          title: "Todo 2",
-          completed: false
-        },
-         {
-          id: 3,
-          title: "Todo 3",
-          completed: true
-        },
-         {
-          id: 4,
-          title: "Todo 4",
-          completed: false
-        }
-      ]
+      todos: []
     }
   },
   methods: {
     deleteTodo(id){
-      this.todos = this.todos.filter(todo => todo.id !== id);
+      axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        // eslint-disable-next-line no-unused-vars
+        .then(res => this.todos = this.todos.filter(todo => todo.id !== id))
+        .catch(err => console.log(err));
+      
     },
     addTodo(newTodo) {
-      this.todos = [...'add-todo', newTodo];
+      const {title, completed } = newTodo;
+      axios.post('https://jsonplaceholder.typicode.com/todos', {
+        title,
+        completed
+      })
+        .then(res => this.todos = this.todos = [...this.todos, res.data])
+        .catch(error => console.log(error));  
     }
+  },
+  created() {
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+    .then(res => this.todos = res.data)
+    .catch(console.error('something went wront wamp wamp!'));
   }
 }
 </script>

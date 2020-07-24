@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid'; <--- id generator. before api request used this to make new ids for new users
 export default {
   name: "AddTodo",
   data() {
@@ -19,13 +19,12 @@ export default {
   methods: {
     addTodo() {
       const newTodo = {
-        id: uuidv4(),
         title: this.title,
         completed: false
       }
       // Send up to parent
       this.$emit('add-todo', newTodo);
-      
+      this.title = '';
     }
   }
 }
