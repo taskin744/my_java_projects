@@ -6,11 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public class Employee {
-	@JsonIgnore
+	
 	private String employeeId;
-	@JsonIgnore
 	private String addressId;
-	@JsonIgnore
 	private String skillId;
 	private String firstName;
 	private String lastName;
@@ -21,7 +19,6 @@ public class Employee {
 	private String role;
 	private String assignedTo;
 	private String businessUnit;
-	
 	
 	public Employee() {
 		

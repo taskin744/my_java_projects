@@ -78,7 +78,7 @@ select * from address;
 select * from employee;
 select * from field;
 select * from skill;
-
-
+SELECT * FROM skill JOIN employee ON skill.id = employee.skill_id WHERE employee_id = '1f13149e-9231-4501-9063-601db18c5d1c';
+SELECT skill.id, skill.field_id, skill.experience_in_month, skill.summary FROM skill JOIN employee ON skill.id = employee.skill_id WHERE employee.employee_id = 'b73196dc-b089-47ce-a2b5-dddd38c06ca8'
 
 COMMIT TRANSACTION;

@@ -15,7 +15,6 @@ import com.mycompany.model.Employee;
 @Component
 public class JDBCEmployeeDAO implements EmployeeDAO {
 
-	
 	private JdbcTemplate template;
 	
 	public JDBCEmployeeDAO(DataSource dataSource) {
@@ -35,11 +34,14 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 	}
 	
 	@Override
-	public Employee getAnEmployeeInfoById(UUID Id) {
-		String sqlGetAnEmp = "SELECT * FROM employee where employee_id=?";
-		SqlRowSet result = template.queryForRowSet(sqlGetAnEmp, Id);
-		result.next();
+	public Employee getAnEmployeeInfoById(UUID id) {
+		String sqlGetAnEmp = "SELECT * FROM employee WHERE employee_id=?";
+		SqlRowSet result = template.queryForRowSet(sqlGetAnEmp, id);
+		if(result.next()) {
 			return mapRowToEmployee(result);
+		}
+		else return null;
+			
 	}
 	
 	@Override
@@ -57,16 +59,12 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 		template.update(sqlDelete, Id);
 	}
 	
-	
-	
-	
-	
-	
 	private Employee mapRowToEmployee(SqlRowSet result) {
 		Employee emp = new Employee();
 		
 		emp.setEmployeeId(result.getString("employee_id"));
 		emp.setAddressId(result.getString("address_id"));
+		emp.setSkillId(result.getString("skill_id"));
 		emp.setFirstName(result.getString("firstname"));
 		emp.setLastName(result.getString("lastname"));
 		emp.setContactEmail(result.getString("contactemail"));
@@ -76,7 +74,6 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 		emp.setAssignedTo(result.getString("assignedto"));
 		emp.setRole(result.getString("emp_role"));
 		emp.setBusinessUnit(result.getString("businessunit"));
-		emp.setSkillId(result.getString("skill_id"));
 		
 		return emp;
 	}
